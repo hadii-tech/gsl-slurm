@@ -17,12 +17,12 @@ Complete the following instructions on **controller** node of the cluster. This 
   version: master
 
 ```
-4. Install the following ansible galaxy roles by running the following commands
+4. Install the following ansible galaxy roles by running the following command:
  
  ```sh
 ansible-galaxy collection install ansible.posix
-ansible-galaxy install gsl.slurm
 ```
+
 5. Create a file called `install.slurm` with the following content, update and modify node information as required in the `slurm_nodes` attribute. This attribute describes all the compute nodes in the cluster.
 
 Also update the `slurm_nas` attribute based on where the NAS is mounted on each node in the cluster.
