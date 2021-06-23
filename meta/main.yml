@@ -1,6 +1,6 @@
 galaxy_info:
-  role_name: hadii-tech.slurm
-  author: Muntazir Fadhel & Mustafa Raza
+  role_name: gsl.slurm
+  author: Hadii Technology
   description: Install and manage the Slurm Workload Manager
   company: Hadii Technology
 
