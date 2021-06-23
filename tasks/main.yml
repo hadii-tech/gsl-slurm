@@ -44,9 +44,9 @@
   include_tasks: configure_cluster.yml
   when: "'slurmservers' in group_names"
   
-- name: Install slurm-web
-  include_tasks: slurm-web.yml 
-  when: "'slurmservers' in group_names"
+#- name: Install slurm-web
+#  include_tasks: slurm-web.yml 
+#  when: "'slurmservers' in group_names"
   
 
   
