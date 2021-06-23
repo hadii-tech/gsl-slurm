@@ -1,0 +1,41 @@
+---
+
+- name: Open Slurmd Port for SLURM communication'
+  command: "ufw allow from any to any port {{ __slurm_config_default.SlurmdPort }} proto tcp"
+
+- name: Install Slurm execution host packages
+  package:
+    name: "{{ __slurm_packages.slurmd }}"
+    state: "{{ 'latest' if slurm_upgrade else 'present' }}"
+
+- name: Create slurm spool directory
+  become: yes
+  file:
+    path: "{{ __slurm_config_merged.SlurmdSpoolDir }}"
+    owner: slurm
+    group: slurm
+    mode: 0755
+    state: directory
+  when: slurm_create_dirs
+  notify:
+    - reload slurmd
+
+- name: Create slurm log directory
+  become: yes
+  file:
+    path: "{{ __slurm_config_merged.SlurmdLogFile | dirname }}"
+    owner: "{{ __slurm_user_name }}"
+    group: "{{ __slurm_group_name }}"
+    mode: 0755
+    state: directory
+  when: slurm_create_dirs and __slurm_config_merged.SlurmdLogFile != omit
+
+- name: Create slurm pid directory
+  become: true
+  file:
+    path: "{{ __slurm_config_merged.SlurmdPidFile| dirname }}"
+    owner: "{{ __slurm_user_name }}"
+    group: "{{ __slurm_group_name }}"
+    mode: 0755
+    state: directory
+  when: slurm_create_dirs and __slurm_config_merged.SlurmdPidFile != omit

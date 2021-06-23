@@ -1,0 +1,27 @@
+---
+
+- name: Check munge dir
+  file:
+    path: /etc/munge
+    owner: munge
+    group: munge
+    mode: 0700
+    state: directory
+
+- name: get munge file stat
+  local_action: stat path=/etc/munge/munge.key
+  register: munge_key
+    
+- name: Copy munge key to target
+  ansible.posix.synchronize:
+    src: /etc/munge/munge.key
+    dest: /etc/munge/munge.key
+  notify:
+    - reload munge
+
+ 
+- name: Ensure Munge is enabled and running
+  service:
+    name: munge
+    enabled: yes
+    state: started

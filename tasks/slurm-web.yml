@@ -1,0 +1,44 @@
+---
+
+- name: create build directory
+  file:
+    path: /root/slurm-web
+    state: directory
+    recurse: yes 
+
+- name: Clone Git repository
+  git:
+    repo: https://github.com/hadii-tech/slurm-web
+    version: master
+    dest: /root/slurm-web
+    
+- name: Build container
+  command: docker build -t slurm-web /root/slurm-web/docker/container
+    
+- name: Create container
+  command: docker create slurm-web
+  
+- name: Move slurm-web run.sh to host machine
+  template:
+    src: "run.sh.j2"
+    dest: "/root/run.sh"
+    owner: root
+    group: root
+    mode: 0755
+  
+- name: Run docker container
+  command: /root/run.sh
+ 
+- name: docker cron setup
+  cron: 
+    name: run container on reboot
+    special_time: reboot
+    job: /root/slurm-web/docker/run/run.sh
+    state: present
+  
+ 
+
+   
+   
+
+    

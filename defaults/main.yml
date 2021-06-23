@@ -1,0 +1,107 @@
+slurm_upgrade: no
+slurm_roles: []
+slurm_partitions: []
+slurm_nodes: []
+slurm_nas: "/nas/slurm"
+slurm_config_dir: "{{ '/etc/slurm-llnl' if __slurm_debian else '/etc/slurm' }}"
+
+slurm_munge_key: "/etc/munge/munge.key"
+
+slurm_create_user: yes
+slurm_create_dirs: yes
+slurm_rotate_logs: yes
+slurm_configure_munge: yes
+
+slurm_user:
+  comment: "Slurm Workload Manager"
+  gid: 888
+  group: slurm
+  home: "/var/lib/slurm"
+  name: slurm
+  shell: "/usr/sbin/nologin"
+  uid: 888
+
+
+slurmd_service_name: slurmd
+slurmctld_service_name: slurmctld
+slurmdbd_service_name: slurmdbd
+
+__slurm_user_name: "{{ (slurm_user | default({})).name | default('slurm') }}"
+__slurm_group_name: "{{ (slurm_user | default({})).group | default('slurm') }}"
+
+__slurm_debian: "{{ ansible_os_family == 'Debian' }}"
+__slurm_redhat: "{{ ansible_os_family == 'RedHat' }}"
+
+__slurm_config_default:
+  AuthType: auth/munge
+  CryptoType: crypto/munge
+  SlurmUser: "{{ __slurm_user_name }}"
+  ClusterName: cluster
+  # default is proctrack/cgroup which is the best but also less than 100% chance of working e.g. in docker
+  ProctrackType: proctrack/pgid
+  # slurmctld options
+  SelectType: "select/cons_tres"
+  SelectTypeParameters: "CR_Core_Memory"
+  JobAcctGatherFrequency: 30
+  PriorityType: "priority/multifactor"
+  AccountingStoragePort: "{{ __slurmdbd_config_default.DbdPort }}"
+  AccountingStorageType: "accounting_storage/slurmdbd"
+  AccountingStorageEnforce: "associations,limits,qos"
+  AccountingStorageHost: "{{ groups['slurmdbdservers'][0] }}"
+  ReturnToService: 2
+  DefMemPerCPU: 1024
+  JobAcctGatherType: "jobacct_gather/linux"
+  PreemptMode: "SUSPEND,GANG"
+  PreemptType: "preempt/qos"
+  SlurmctldPort: 6817
+  SlurmctldLogFile: "{{ '/var/log/slurm-llnl/slurmctld.log' if __slurm_debian else omit }}"
+  SlurmctldPidFile: >-
+    {{
+        '/var/run/slurm-llnl/slurmctld.pid' if __slurm_debian else omit
+    }}
+  StateSaveLocation: "{{ slurm_nas }}/slurm_state_save"
+  # slurmd options
+  SlurmdPort: 6818
+  SlurmdLogFile: "{{ '/var/log/slurm-llnl/slurmd.log' if __slurm_debian else omit }}"
+  SlurmdPidFile: >-
+    {{
+        '/var/run/slurm-llnl/slurmd.pid' if __slurm_debian else omit
+    }}
+  SlurmdSpoolDir: >-
+    {{
+        '/var/lib/slurm-llnl/slurmd' if __slurm_debian else (
+        '/var/spool/slurm/slurmd' if __slurm_redhat else
+        omit)
+    }}
+__slurm_config_merged: "{{ __slurm_config_default | combine(slurm_config | default({})) }}"
+
+__slurm_debian_packages:
+  client:  [slurm-client, slurm-wlm-doc]
+  slurmctld: [slurm-wlm]
+  slurmd: [slurm-wlm]
+  slurmdbd: [slurmdbd]
+  
+__slurm_redhat_packages:
+  client: [slurm, munge]
+  slurmctld: [munge, slurm, slurm-slurmctld]
+  slurmd: [munge, slurm, slurm-slurmd]
+  slurmdbd: [munge, slurm-slurmdbd]
+
+__slurm_packages: "{{ __slurm_debian_packages if __slurm_debian else __slurm_redhat_packages }}"
+
+__slurmdbd_config_default:
+  AuthType: auth/munge
+  DbdHost: "{{ groups['slurmdbdservers'][0] }}"
+  DbdPort: 6819
+  SlurmUser: "{{ __slurm_user_name }}"
+  PidFile: >-
+    {{
+        '/var/run/slurm-llnl/slurmdbd.pid' 
+    }}
+  LogFile: "{{ '/var/log/slurm-llnl/slurmdbd.log' }}"
+  StorageLoc: mariadb
+  StorageUser: slurm
+  StoragePass: slurmdb
+  StoragePort: 3306
+  StorageType: accounting_storage/mysql
+__slurmdbd_config_merged: "{{ __slurmdbd_config_default | combine(slurmdbd_config | default({})) }}"

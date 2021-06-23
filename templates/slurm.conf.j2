@@ -1,0 +1,30 @@
+##
+## This file is maintained by Ansible - ALL MODIFICATIONS WILL BE REVERTED
+##
+
+{% for host in groups['slurmservers'] %}
+SlurmctldHost={{ host }}
+{% endfor %}
+
+# Configuration options
+{% for key in __slurm_config_merged | sort %}
+{% set val = __slurm_config_merged[key] %}
+{% if val is not none and val != omit %}
+{{ key }}={{ 'YES' if val is sameas true else ('NO' if val is sameas false else val) }}
+{% endif %}
+{% endfor %}
+
+# Nodes
+{% for i in slurm_nodes %}
+NodeName={{ i.name }}{% for k in i | sort if k != 'name' %} {{ k }}={{ 'YES' if i[k] is sameas true else ('NO' if i[k] is sameas false else i[k]) }}{% endfor %}
+
+{% else %}
+NodeName=localhost State=UNKNOWN
+{% endfor %}
+
+# Partitions
+{% for i in slurm_partitions %}
+PartitionName={{ i.name }} Nodes={{ (slurm_nodes[0]).name }} Default=YES
+
+
+{% endfor %}
