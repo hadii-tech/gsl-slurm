@@ -7,7 +7,7 @@
 * All nodes should mount a NAS at the same location.
 
 ## Getting Started
-Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster.
+Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster. 
 1. Install Ansible
 2. Install Ansible Galaxy on the head node Using the following instructions: https://docs.ansible.com/ansible/latest/installation_guide/index.html
 3. Create a file called `requirements.yml` file pointing to this git repository:
@@ -26,15 +26,15 @@ ansible-galaxy collection install ansible.posix
 
 5. Create a file called `install.slurm` with the following content, update and modify node information as required in the `slurm_nodes` attribute. This attribute describes all the compute nodes in the cluster.
 
-Also update the `slurm_nas` attribute based on where the NAS is mounted on each node in the cluster.
+You will also need to update the `slurm_nas` attribute based on where the NAS is mounted on each node in the cluster.
  
  ```sh
-- name: Install slurm
+ - name: Slurm all in One
    hosts: all
    roles:
      - gsl.slurm
    vars:
-     slurm_nas: "/nas/slurm"
+     slurm_nas: "/nas/slurm" 
      slurm_nodes:
        - name: "slurmcompute01"
          CPUs: 1
@@ -44,14 +44,15 @@ Also update the `slurm_nas` attribute based on where the NAS is mounted on each 
          Default: YES
          MaxTime: UNLIMITED
          Nodes: "slurmcompute01"
-
-
 ```
-6. Lastly, update the inventory in `/etc/ansible/hosts` file should point to the appropriate nodes. Slurmservers contains all the nodes to be used as controller, while slurmexechosts represent all the nodes to be used as compute nodes. Finally, slurmdbdservers contains a list of all nodes to be used as database nodes. For a simple three node cluster, the following represents a sample `hosts` file that one may use.
+6. Lastly, update the inventory in `/etc/ansible/hosts` so that the groups point to the appropriate nodes. Slurmservers contains all the nodes to be used as controller, while slurmexechosts represent all the nodes to be used as compute nodes. Finally, slurmdbdservers contains a list of all nodes to be used as database nodes. 
+
+For a simple three node cluster, the following represents a sample `hosts` file that one may use. Note, we've designated the slurmdb node as slurm controller as well which will make our cluster highly available.
 
  ```sh
 [slurmservers]
 slurmcontroller
+slurmdb
 
 [slurmexechosts]
 Slurmcompute01
