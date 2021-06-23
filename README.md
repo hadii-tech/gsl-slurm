@@ -1,30 +1,37 @@
 # SLURM Documentation
+## Requirements
+* All nodes should have a hostname that resolves to an easily identifiable name for the node, e.g. [compute01, compute02, etc..]
+* All nodes should have password-less SSH configure between each all the other nodes in the cluster
+* All nodes should be running Ubuntu 20.04
+* All nodes should mount a NAS at the same location
 
 ## Getting Started
-Complete the following instructions on head/controller node of the cluster
+Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster.
 1. Install Ansible
 2. Install Ansible Galaxy on the head node Using the following instructions: https://docs.ansible.com/ansible/latest/installation_guide/index.html
-3. Install the following ansible galaxy roles by running the following commands
- 
- ```sh
-ansible-galaxy collection install ansible.posix
-ansible-galaxy install hadii-tech.slurm
-```
 3. Create a file called `requirements.yml` file pointing to this git repository:
 
  ```sh
-- name: hadii-tech.slurm
-  src: https://github.com/hadii-tech/ansible-slurm.git
+- name: gsl.slurm
+  src: https://github.com/hadii-tech/gsl-slurm.git
   version: master
 
 ```
-4. Create a file called `install.slurm` with the following content, update and modify node information as required in the `slurm_nodes` attribute.
+4. Install the following ansible galaxy roles by running the following commands
+ 
+ ```sh
+ansible-galaxy collection install ansible.posix
+ansible-galaxy install gsl.slurm
+```
+5. Create a file called `install.slurm` with the following content, update and modify node information as required in the `slurm_nodes` attribute. This attribute describes all the compute nodes in the cluster.
+
+Also update the `slurm_nas` attribute based on where the NAS is mounted on each node in the cluster.
  
  ```sh
 - name: Install slurm
    hosts: all
    roles:
-     - slurm
+     - gsl.slurm
    vars:
      slurm_nas: "/nas/slurm"
      slurm_nodes:
@@ -39,7 +46,7 @@ ansible-galaxy install hadii-tech.slurm
 
 
 ```
-5. Lastly, update the inventory in /etc/ansible/hosts file should point to the appropriate nodes. Slurmservers contains all the nodes to be used as controller, while slurmexechosts represent all the nodes to be used as compute nodes. Finally, slurmdbdservers contains a list of all nodes to be used as database nodes.
+6. Lastly, update the inventory in `/etc/ansible/hosts` file should point to the appropriate nodes. Slurmservers contains all the nodes to be used as controller, while slurmexechosts represent all the nodes to be used as compute nodes. Finally, slurmdbdservers contains a list of all nodes to be used as database nodes. For a simple three node cluster, the following represents a sample `hosts` file that one may use.
 
  ```sh
 [slurmservers]
