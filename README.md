@@ -67,7 +67,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 * Install slurm.conf 
   *	Installs slurm.conf which describes general Slurm configuration information, the nodes to be managed, information about how those nodes are grouped into partitions, and various scheduling parameters associated with those partitions. This task is installed by root owner, and once completed notifies “restart slurmd” and “restart slurmctld” ## Tasks.
 * Setup munge
-  • Munge is used for authentication communication between nodes. In this step, the munge key from the controller node is copied to all other nodes in the cluster.
+   * Munge is used for authentication communication between nodes. In this step, the munge key from the controller node is copied to all other nodes in the cluster.
 
 ## TASKS/db.yml:
 * This task sets up and configures a mariadb database to be used for SLURM accounting.
