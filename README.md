@@ -1,20 +1,7 @@
 # SLURM Documentation
 ## Requirements
 * All nodes should have a hostname that resolves to an easily identifiable name for the node, e.g. [compute01, compute02, etc..]
-   * Additionally, all nodes should be able to communicate with other nodes via their hostnames as well. Below is a sample `/etc/hosts` file for the database node (slurmdb) in our test cluster
-```
-# The following lines are desirable for IPv6 capable hosts
-::1 ip6-localhost ip6-loopback
-fe00::0 ip6-localnet
-ff00::0 ip6-mcastprefix
-ff02::1 ip6-allnodes
-ff02::2 ip6-allrouters
-ff02::3 ip6-allhosts
-172.31.30.148 slurmcontroller
-172.31.31.93 slurmcompute01
-root@slurmdb:~# 
-```
-
+   * Additionally, all nodes should be able to communicate (via ping) with other nodes in the cluster via their hostnames as well. 
 * All nodes should have password-less SSH configure between each all the other nodes in the cluster
 * All nodes should be running Ubuntu 20.04
 * All nodes should mount a NAS at the same location.
