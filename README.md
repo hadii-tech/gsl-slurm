@@ -3,7 +3,7 @@
 * All nodes should have a hostname that resolves to an easily identifiable name for the node, e.g. [compute01, compute02, etc..]
 * All nodes should have password-less SSH configure between each all the other nodes in the cluster
 * All nodes should be running Ubuntu 20.04
-* All nodes should mount a NAS at the same location
+* All nodes should mount a NAS at the same location.
 
 ## Getting Started
 Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster.
