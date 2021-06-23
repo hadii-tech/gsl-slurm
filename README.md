@@ -82,21 +82,21 @@ This task installs the Slurm client on all three nodes, and configures a number 
 
 
 ## TASKS/main.yml:
-*Include user Tasks
-  *This task calls on the “user.yml” file for the purposes of creating a `slurm` linux user and group across all nodes.
+* Include user Tasks
+  * This task calls on the “user.yml” file for the purposes of creating a `slurm` linux user and group across all nodes.
 * Include controller installation
-   *	This task calls on the “slurmctld.yml” file for the configuration of the controller node. 
+   * This task calls on the “slurmctld.yml” file for the configuration of the controller node. 
 * Incude execution host installation # Tasks
-  * Calls on the “slurmd.yml” file for the configuration of the execution host node.
-*Include DB installation # Tasks
-   *Calls on the “slurmdbd.yml” file for the configuration of the database server.
+   * Calls on the “slurmd.yml” file for the configuration of the execution host node.
+* Include DB installation # Tasks
+   * Calls on the “slurmdbd.yml” file for the configuration of the database server.
 *Import common # Tasks
-   *Calls on the “common.yml” file to run the tasks that are common to all nodes in the cluster
-*Ensure slurmdbd is enabled and running
-   *Uses the ansible service module to ensure that the slurmdbd node is enabled and running. Slurmdbd provides a secure enterprise-wide interface to a database for Slurm. This is particularly useful for archiving accounting records.
+   * Calls on the “common.yml” file to run the tasks that are common to all nodes in the cluster
+* Ensure slurmdbd is enabled and running
+   * Uses the ansible service module to ensure that the slurmdbd node is enabled and running. Slurmdbd provides a secure enterprise-wide interface to a database for Slurm. This is particularly useful for archiving accounting records.
 * Ensure slurmctld is enabled and running
-   *Uses the ansible service module to ensure that the slurmctld node is enabled and running. slurmctld is the central management daemon of Slurm. It monitors all other Slurm daemons and resources, accepts work (jobs), and allocates resources to those jobs.
-*Ensure slurmd is enabled and running
+   * Uses the ansible service module to ensure that the slurmctld node is enabled and running. slurmctld is the central management daemon of Slurm. It monitors all other Slurm daemons and resources, accepts work (jobs), and allocates resources to those jobs.
+* Ensure slurmd is enabled and running
    *Uses the ansible service module to ensure that the exec node is enabled and running. Slurmd or exec node is the compute node daemon of Slurm. 
 
 ## TASKS/munge.yml:
