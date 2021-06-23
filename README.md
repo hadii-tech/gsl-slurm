@@ -59,8 +59,10 @@ Slurmcompute01
 slurmdb
 
 ```
- 
-## TASKS/common.yml:
+
+## Task Descriptions
+
+### TASKS/common.yml:
 This task installs the Slurm client on all three nodes, and configures a number of common settings all the nodes will need:
 * Setup Log rotation 
   * Rotatest slurm logs to avoid filling up disk space
@@ -69,10 +71,10 @@ This task installs the Slurm client on all three nodes, and configures a number 
 * Setup munge
    * Munge is used for authentication communication between nodes. In this step, the munge key from the controller node is copied to all other nodes in the cluster.
 
-## TASKS/db.yml:
+### TASKS/db.yml:
 * This task sets up and configures a mariadb database to be used for SLURM accounting.
 
-## TASKS/docker.yml:
+### TASKS/docker.yml:
  * Ensure repository key is installed
      *	This task downloads the key from the docker url to start the docker installation process.
  * Ensure docker registry is available 
@@ -81,7 +83,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
   * This task triggers the docker installation.
 
 
-## TASKS/main.yml:
+### TASKS/main.yml:
 * Include user Tasks
   * This task calls on the “user.yml” file for the purposes of creating a `slurm` linux user and group across all nodes.
 * Include controller installation
@@ -99,7 +101,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 * Ensure slurmd is enabled and running
    *Uses the ansible service module to ensure that the exec node is enabled and running. Slurmd or exec node is the compute node daemon of Slurm. 
 
-## TASKS/munge.yml:
+### TASKS/munge.yml:
 * Check munge dir
   * This task ensure the munge key directory “/etc/munge” exists.
 * Get munge file stat
@@ -109,7 +111,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 *Ensure Munge is enabled and running
   This task uses the ansible service module to ensure munge is enabled and running.
   
-## TASKS/slurmctld.yml:
+### TASKS/slurmctld.yml:
 * Install Slurm controller packages
     * Installs the necessary slurm packages the controller node requires to operate.
 * Create slurm state directory
@@ -119,7 +121,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 * 'Service slurmctld : Directory of Pidfile must exist and set slurm group permission'
    * Ensures the directory for the slurmctld service exists and sets group permission on the directory appropriately. 
 
-## TASKS/slurmd.yml:
+### TASKS/slurmd.yml:
 * Install Slurm execution host packages
    * Installs the necessary slurm packages for the “exec” node.  
 * Create slurm spool directory
@@ -131,7 +133,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 * Include config dir creation # Tasks
  
  
-## TASKS/configure_cluster.yml:
+### TASKS/configure_cluster.yml:
 * Check if main slurm cluster called `cluster` already exists in the accounting database.
 * If it doesn't already exist, it is created
 * Commercial job Quality of Service (qos) is created with a job priority of 100.
