@@ -130,7 +130,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
     * Creates the slurm pid directory in which the pid files for the configuration will be downloaded. 
 * Include config dir creation # Tasks
  
-…….
+ 
 ## TASKS/configure_cluster.yml:
 * Check if main slurm cluster called `cluster` already exists in the accounting database.
 * If it doesn't already exist, it is created
