@@ -100,7 +100,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
    *Uses the ansible service module to ensure that the exec node is enabled and running. Slurmd or exec node is the compute node daemon of Slurm. 
 
 ## TASKS/munge.yml:
-*Check munge dir
+* Check munge dir
   * This task ensure the munge key directory “/etc/munge” exists.
 * Get munge file stat
    * Determines if a munge key file exists on the local host that runs the playbook, in this case, this is our main SLURM head node.
@@ -112,7 +112,7 @@ This task installs the Slurm client on all three nodes, and configures a number 
 ## TASKS/slurmctld.yml:
 * Install Slurm controller packages
     * Installs the necessary slurm packages the controller node requires to operate.
-*Create slurm state directory
+* Create slurm state directory
     * Creates the state directory, which is used when the slurm controller node is shutting down, as it saves it’s current state to the state directory. The task also has a “when” condition, which causes the controller node to reload once the state directory has been created.
 *  Create slurm log directory
     *Creates the log file location for the controller node, which is the slurmctld log directory. 
