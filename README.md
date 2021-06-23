@@ -45,7 +45,7 @@ You will also need to update the `slurm_nas` attribute based on where the NAS is
          MaxTime: UNLIMITED
          Nodes: "slurmcompute01"
 ```
-6. Lastly, update the inventory in `/etc/ansible/hosts` so that the groups point to the appropriate nodes. *Slurmservers* contains all the nodes to be used as controller, while *slurmexechosts* represent all the nodes to be used as compute nodes. Finally, *slurmdbdservers* contains a list of all nodes to be used as database nodes. 
+6. Lastly, update the inventory in `/etc/ansible/hosts` so that the groups point to the appropriate nodes. **Slurmservers** contains all the nodes to be used as controller, while **slurmexechosts** represent all the nodes to be used as compute nodes. Finally, **slurmdbdservers** contains a list of all nodes to be used as database nodes. 
 
 For a simple three node cluster, the following represents a sample `hosts` file that one may use. Note, we've designated the slurmdb node as slurm controller as well which will make our cluster highly available.
 
