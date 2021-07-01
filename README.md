@@ -2,12 +2,12 @@
 ## Requirements
 * All nodes should have a hostname that resolves to an easily identifiable name for the node, e.g. [compute01, compute02, etc..]
    * Additionally, all nodes should be able to communicate (via ping) with other nodes in the cluster via their hostnames as well. 
-* All nodes should have password-less SSH configure between each all the other nodes in the cluster
+* All nodes should have root password-less SSH configured between each all the other nodes in the cluster
 * All nodes should be running Ubuntu 20.04
 * All nodes should mount a NAS at the same location.
 
 ## Getting Started
-Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster. 
+Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster. The playbook should be run as **root** user.
 1. Install Ansible
 2. Install Ansible Galaxy on the head node Using the following instructions: https://docs.ansible.com/ansible/latest/installation_guide/index.html
 3. Create a file called `requirements.yml` file pointing to this git repository:
