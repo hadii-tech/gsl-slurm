@@ -15,7 +15,7 @@
     line: 'PIDFile={{ __slurm_config_merged.SlurmdPidFile }}'
     
 - name: Reload systemctl
-  ansible.builtin.command: systemctl daemon-reload
+  command: systemctl daemon-reload
     
 - name: Create slurm spool directory
   become: yes
