@@ -12,7 +12,7 @@
   lineinfile:
     path: "{{ slurmUnitLocation }}/slurmctld.service"
     regexp: '^PIDFile='
-    line: 'PIDFile={{ __slurm_config_merged.SlurmctldPidFile | dirname }}'
+    line: 'PIDFile={{ __slurm_config_merged.SlurmctldPidFile }}'
       
       
 - name: Create slurm state directory
