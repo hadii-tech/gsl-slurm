@@ -4,7 +4,7 @@ slurm_partitions: []
 slurm_nodes: []
 slurm_nas: "/nas/slurm"
 slurm_config_dir: "{{ '/etc/slurm-llnl' if __slurm_debian else '/etc/slurm' }}"
-
+slurmUnitLocation: "/lib/systemd/system"
 slurm_munge_key: "/etc/munge/munge.key"
 
 slurm_create_user: yes
