@@ -37,7 +37,7 @@
     line: 'PIDFile={{ __slurmdbd_config_merged.PidFile }}'
     
 - name: Reload systemctl
-  ansible.builtin.command: systemctl daemon-reload
+  command: systemctl daemon-reload
   
 - name: Change ownership, group and permisssions for /etc/slurm-llnl 
   become: true
