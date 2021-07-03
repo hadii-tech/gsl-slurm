@@ -12,7 +12,7 @@
   when: cluster_check.stdout != "cluster"
   
 - name: Create commercial qos
-  command: "sacctmgr add qos commercial priority=100"
+  command: "sacctmgr -i add qos commercial priority=10000"
   become: yes
   become_user: root
   when: cluster_check.stdout != "cluster"
