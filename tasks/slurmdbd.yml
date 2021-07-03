@@ -34,7 +34,7 @@
   lineinfile:
     path: "{{ slurmUnitLocation }}/slurmdbd.service"
     regexp: '^PIDFile='
-    line: 'PIDFile={{ __slurmdbd_config_merged.PidFile | dirname }}'
+    line: 'PIDFile={{ __slurmdbd_config_merged.PidFile }}'
     
     
 - name: Change ownership, group and permisssions for /etc/slurm-llnl 
