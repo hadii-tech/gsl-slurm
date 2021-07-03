@@ -8,6 +8,11 @@
     name: munge
     state: restarted
 
+- name: reload munge
+  service:
+    name: munge
+    state: reloaded
+
 - name: reload slurmdbd
   service:
     name: "{{ slurmdbd_service_name }}"
