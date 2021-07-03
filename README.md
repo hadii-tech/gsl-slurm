@@ -61,6 +61,7 @@ slurmcompute01
 slurmdb
 
 ```
+**Note**: To pull in updates made to this role into your local environment, execute `ansible-galaxy install --force -r requirements.yml`.
 
 ## Task Descriptions
 
