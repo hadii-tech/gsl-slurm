@@ -8,6 +8,12 @@
     name: "{{ __slurm_packages.slurmd }}"
     state: "{{ 'latest' if slurm_upgrade else 'present' }}"
 
+- name: Substitute pid file location
+  lineinfile:
+    path: "{{ slurmUnitLocation }}/slurmd.service"
+    regexp: '^PIDFile='
+    line: 'PIDFile={{ __slurm_config_merged.SlurmdPidFile | dirname }}'
+    
 - name: Create slurm spool directory
   become: yes
   file:
@@ -33,7 +39,7 @@
 - name: Create slurm pid directory
   become: true
   file:
-    path: "{{ __slurm_config_merged.SlurmdPidFile| dirname }}"
+    path: "{{ __slurm_config_merged.SlurmdPidFile | dirname }}"
     owner: "{{ __slurm_user_name }}"
     group: "{{ __slurm_group_name }}"
     mode: 0755
