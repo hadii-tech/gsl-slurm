@@ -25,6 +25,8 @@
     enabled: yes
     state: started
   when: "'slurmdbdservers' in group_names"
+  notify:
+    - reload slurmdbd
 
 - name: Ensure slurmctld is enabled and running
   service:
@@ -32,6 +34,8 @@
     enabled: yes
     state: started
   when: "'slurmservers' in group_names"
+  notify:
+    - reload slurmctld
 
 - name: Ensure slurmd is enabled and running
   service:
@@ -39,6 +43,8 @@
     enabled: yes
     state: started
   when: "'slurmexechosts' in group_names"
+  notify:
+    - reload slurmd
 
 - name: Configure slurm cluster accounting
   include_tasks: configure_cluster.yml
