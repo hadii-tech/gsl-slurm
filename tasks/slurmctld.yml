@@ -14,7 +14,9 @@
     regexp: '^PIDFile='
     line: 'PIDFile={{ __slurm_config_merged.SlurmctldPidFile }}'
       
-      
+- name: Reload systemctl
+  ansible.builtin.command: systemctl daemon-reload
+  
 - name: Create slurm state directory
   become: yes
   file:
