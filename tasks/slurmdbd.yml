@@ -24,10 +24,19 @@
   file:
     path: /var/cache/apt/archives/lock
     mode: 0777
+    
 - name: Install Slurm DB packages
   package:
     name: "{{ __slurm_packages.slurmdbd }}"
     state: "{{ 'latest' if slurm_upgrade else 'present' }}"
+    
+- name: Substitute pid file location
+  lineinfile:
+    path: "{{ slurmUnitLocation }}/slurmdbd.service"
+    regexp: '^PIDFile='
+    line: 'PIDFile={{ __slurmdbd_config_merged.PidFile | dirname }}'
+    
+    
 - name: Change ownership, group and permisssions for /etc/slurm-llnl 
   become: true
   file:
