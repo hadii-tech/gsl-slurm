@@ -47,6 +47,7 @@ __slurm_config_default:
   AccountingStoragePort: "{{ __slurmdbd_config_default.DbdPort }}"
   AccountingStorageType: "accounting_storage/slurmdbd"
   AccountingStorageEnforce: "associations,limits,qos"
+  PriorityWeightQOS: 100000
   AccountingStorageHost: "{{ groups['slurmdbdservers'][0] }}"
   ReturnToService: 2
   DefMemPerCPU: 1024
