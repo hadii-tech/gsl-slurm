@@ -19,6 +19,12 @@
     state: reloaded
   when: "'slurmdbdservers' in group_names or 'dbd' in slurm_roles"
 
+- name: restart slurmdbd
+  service:
+    name: "{{ slurmdbd_service_name }}"
+    state: restarted
+  when: "'slurmdbdservers' in group_names or 'dbd' in slurm_roles"
+  
 - name: reload slurmctld
   service:
     name: "{{ slurmctld_service_name }}"
