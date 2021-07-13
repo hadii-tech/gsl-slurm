@@ -17,7 +17,7 @@
     src: /etc/munge/munge.key
     dest: /etc/munge/munge.key
   notify:
-    - reload munge
+    - restart munge
 
  
 - name: Ensure Munge is enabled and running
