@@ -16,6 +16,7 @@
   ansible.posix.synchronize:
     src: /etc/munge/munge.key
     dest: /etc/munge/munge.key
+    checksum: yes
   notify:
     - restart munge
 
