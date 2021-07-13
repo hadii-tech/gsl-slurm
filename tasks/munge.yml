@@ -7,10 +7,6 @@
     group: munge
     mode: 0700
     state: directory
-
-- name: get munge file stat
-  local_action: stat path=/etc/munge/munge.key
-  register: munge_key
     
 - name: Copy munge key to target
   ansible.posix.synchronize:
