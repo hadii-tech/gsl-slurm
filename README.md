@@ -5,8 +5,12 @@
 * All nodes should have root password-less SSH configured between each all the other nodes in the cluster
 * All nodes should be running Ubuntu 20.04
 * All nodes should mount a NAS at the same location (e.g. '\nas').
+   * A high performance NAS should be used to minimize latency within the cluster.
 * All nodes should be able to to create and modify directories and their permissions on the configured nas directory above.
 * Clocks should be synchronized across all nodes in the cluster
+* Researchers and users of the cluster should only be able to SSH into the controller node of the cluster.
+    * They should not be able to SSH into compute nodes directly.
+
 
 ## Getting Started
 Complete the following instructions on **controller** node of the cluster. This node will run the playbook and coordination the installation over all the other nodes in the cluster. The playbook should be run as **root** user.
