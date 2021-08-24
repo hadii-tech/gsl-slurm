@@ -21,13 +21,6 @@
     line: 'RuntimeDirectory=slurm-llnl'
     insertafter: '^.*\[Service\].*$'
     
-- name: Ensure the default Apache port is 8080
-  ansible.builtin.lineinfile:
-    path: /etc/httpd/conf/httpd.conf
-    regexp: '^Listen '
-    insertafter: '^#Listen '
-    line: Listen 8080
-    
 - name: Reload systemctl
   command: systemctl daemon-reload
     
