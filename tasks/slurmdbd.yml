@@ -36,6 +36,13 @@
     regexp: '^PIDFile='
     line: 'PIDFile={{ __slurmdbd_config_merged.PidFile }}'
     
+- name: Set the correct runtime directory
+  lineinfile:
+    path: "{{ slurmUnitLocation }}/slurmdbd.service"
+    regexp: '^.*RuntimeDirectory.*$'
+    line: 'RuntimeDirectory=slurm-llnl'
+    insertafter: '^.*\[Service\].*$'
+    
 - name: Reload systemctl
   command: systemctl daemon-reload
   
